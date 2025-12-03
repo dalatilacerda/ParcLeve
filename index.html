@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Valores de Curso</title>
+    <style>
+        /* Estilos CSS (Sem Alteração) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1em;
+        }
+
+        .input-group input[type="number"],
+        .input-group input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input[type="number"]:focus,
+        .input-group input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #result {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #eee;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        #result h2 {
+            color: #0056b3;
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        #result p, #result ul {
+            font-size: 1.05em;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        #result ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #result ul li {
+            background-color: #e9f5ff;
+            margin-bottom: 8px;
+            padding: 12px 15px;
+            border-left: 5px solid #007bff;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        #result ul li strong {
+            color: #0056b3;
+            margin-bottom: 4px;
+        }
+        
+        #result ul li span {
+            font-size: 0.9em;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            background-color: #ffebee;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #ef9a9a;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 1fr 1fr; /* Divide em duas colunas para telas maiores */
+            }
+            .input-section {
+                grid-column: 1 / 2; /* Inputs na primeira coluna */
+            }
+            .result-section {
+                grid-column: 2 / 3; /* Resultados na segunda coluna */
+            }
+            h1 {
+                grid-column: 1 / -1; /* Título abrange todas as colunas */
+            }
+            button {
+                grid-column: 1 / -1; /* Botão abrange todas as colunas */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Valores de Curso</h1>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="valsdes">Valor da parcela SEM desconto (Valor Cheio):</label>
+                <input type="number" id="valsdes" placeholder="Ex: 1000.00" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="valdparl">Valor da Parcela Leve (primeiros meses):</label>
+                <input type="number" id="valdparl" placeholder="Ex: 200.00" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="quantparc">Quantidade de Parcelas Leves (1, 2 ou 3):</label>
+                <input type="number" id="quantparc" placeholder="Ex: 2" min="1" max="3" required>
+            </div>
+            <div class="input-group">
+                <label for="durdanos">Duração do curso em ANOS:</label>
+                <input type="number" id="durdanos" placeholder="Ex: 2" min="0.5" step="0.5" required>
+            </div>
+            <div class="input-group">
+                <label for="valdpcd">Valor da Parcela com Desconto BASE:</label>
+                <input type="number" id="valdpcd" placeholder="Ex: 700.00" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="valdpdif">Valor da Parcela com Desconto MUDANÇA (Opcional):</label>
+                <input type="number" id="valdpdif" placeholder="Ex: 750.00 (deixe em branco se não houver)" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="mesmudanca">Mês de Início da Mudança de Parcela (Opcional):</label>
+                <input type="number" id="mesmudanca" placeholder="Ex: 13 (deixe em branco se não houver mudança)" min="2">
+            </div>
+            
+            <button onclick="calcularValores()">Calcular Parcelas</button>
+        </div>
+
+        <div class="result-section">
+            <div id="result">
+                <h2>Resultados do Cálculo</h2>
+                <p>Preencha os campos e clique em "Calcular Parcelas" para ver os resultados aqui.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para a lógica de cálculo (Atualizado com o mês de mudança)
+        function calcularValores() {
+            // --- Coleta de Dados ---
+            const valsdes = parseFloat(document.getElementById('valsdes').value);
+            const valdparl = parseFloat(document.getElementById('valdparl').value);
+            const quantparc = parseInt(document.getElementById('quantparc').value);
+            const durdanos = parseFloat(document.getElementById('durdanos').value);
+            const valdpcd = parseFloat(document.getElementById('valdpcd').value);
+            
+            const valdpdifInput = document.getElementById('valdpdif').value;
+            const valdpdif = valdpdifInput ? parseFloat(valdpdifInput) : null;
+            
+            const mesMudancaInput = document.getElementById('mesmudanca').value;
+            const mesMudanca = mesMudancaInput ? parseInt(mesMudancaInput) : null;
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Limpa resultados anteriores
+
+            // --- Validação Básica ---
+            if (isNaN(valsdes) || isNaN(valdparl) || isNaN(quantparc) || isNaN(durdanos) || isNaN(valdpcd)) {
+                resultDiv.innerHTML = '<p class="error-message">🚨 Por favor, preencha todos os campos obrigatórios com valores numéricos válidos.</p>';
+                return;
+            }
+            if (quantparc < 1 || quantparc > 3) {
+                resultDiv.innerHTML = '<p class="error-message">🚨 A quantidade de parcelas leves deve ser 1, 2 ou 3.</p>';
+                return;
+            }
+            if (durdanos <= 0) {
+                 resultDiv.innerHTML = '<p class="error-message">🚨 A duração do curso deve ser maior que zero.</p>';
+                return;
+            }
+            if ((valdpdif !== null && mesMudanca === null) || (valdpdif === null && mesMudanca !== null)) {
+                resultDiv.innerHTML = '<p class="error-message">🚨 Atenção: Para a alteração de valor, você deve preencher o **Valor da Mudança** E o **Mês de Início da Mudança**.</p>';
+                return;
+            }
+            if (mesMudanca !== null && mesMudanca <= quantparc) {
+                resultDiv.innerHTML = `<p class="error-message">🚨 Erro: O mês de mudança (${mesMudanca}°) não pode ser igual ou menor que o número de parcelas leves (${quantparc} parcelas).</p>`;
+                return;
+            }
+
+            // --- Cálculos ---
+            const durMesesTotal = durdanos * 12;
+            const mesesCompensacao = durMesesTotal - quantparc;
+
+            if (mesesCompensacao <= 0) {
+                resultDiv.innerHTML = '<p class="error-message">🚨 Erro: A quantidade de parcelas leves é igual ou superior à duração total do curso.</p>';
+                return;
+            }
+
+            const diferencaUnitParcLeve = valsdes - valdparl;
+            const valorTotalRedistribuir = diferencaUnitParcLeve * quantparc;
+            const compensacaoMensal = valorTotalRedistribuir / mesesCompensacao;
+
+            const valorParcelaNormal = valdpcd + compensacaoMensal;
+            let valorParcelaMudanca = null;
+            if (valdpdif !== null) {
+                valorParcelaMudanca = valdpdif + compensacaoMensal;
+            }
+
+            // --- Exibição dos Resultados ---
+            
+            let htmlContent = '<h2>Resultados do Cálculo</h2>';
+            htmlContent += `<p><strong>Duração Total do Curso:</strong> ${parseInt(durMesesTotal)} meses</p>`;
+            htmlContent += `<p><strong>Acréscimo de Compensação Mensal:</strong> R$ ${compensacaoMensal.toFixed(2).replace('.', ',')}</p>`;
+
+            htmlContent += '<h3>Detalhes das Parcelas:</h3>';
+            htmlContent += '<ul>';
+
+            // 1. Parcela Leve
+            const pluralLeve = quantparc > 1 ? 'Parcelas Leves' : 'Parcela Leve';
+            const mesesLeve = quantparc > 1 ? `1° ao ${quantparc}° mês` : `1° mês`;
+
+            htmlContent += `<li><strong>${mesesLeve}</strong>: ${pluralLeve}`;
+            htmlContent += `<span>Valor: R$ ${valdparl.toFixed(2).replace('.', ',')}</span></li>`;
+
+            // 2. Parcela Normal e Mudança
+            const inicioNormal = quantparc + 1;
+
+            if (valdpdif === null) {
+                // CASO 1: SEM MUDANÇA (valdpdif = null)
+                
+                const fimTotal = parseInt(durMesesTotal);
+                let descricaoPeriodo = `${inicioNormal}° mês até o ${fimTotal}° mês aproximadamente`;
+                let valorFormatado = valorParcelaNormal.toFixed(2).replace('.', ',');
+
+                htmlContent += `<li><strong>${descricaoPeriodo}</strong>: Parcela Base + Compensação`;
+                htmlContent += `<span>Valor: R$ ${valorFormatado} + Reajuste anual</span></li>`;
+
+            } else {
+                // CASO 2: COM MUDANÇA (valdpdif !== null)
+                
+                const mesFimPrimeiroPeriodo = mesMudanca - 1;
+                
+                // --- 2.1. Primeiro Período (Parcela Base + Compensação, ANTES da mudança) ---
+                if (inicioNormal < mesMudanca) {
+                    
+                    let descricaoPeriodo1 = `${inicioNormal}° mês até o ${mesFimPrimeiroPeriodo}° mês aproximadamente`;
+                    let valorFormatado1 = valorParcelaNormal.toFixed(2).replace('.', ',');
+                    
+                    htmlContent += `<li><strong>${descricaoPeriodo1}</strong>: Parcela Base + Compensação`;
+                    htmlContent += `<span>Valor: R$ ${valorFormatado1}</span></li>`;
+                }
+
+                // --- 2.2. Segundo Período (Parcela MUDANÇA + Compensação, DO mês de mudança em diante) ---
+                
+                let inicioSegundoPeriodo = mesMudanca;
+                let fimSegundoPeriodo = parseInt(durMesesTotal);
+                let valorFormatado2 = valorParcelaMudanca.toFixed(2).replace('.', ',');
+                
+                let descricaoPeriodo2 = `${inicioSegundoPeriodo}° mês até o ${fimSegundoPeriodo}° mês aproximadamente`;
+
+                htmlContent += `<li><strong>${descricaoPeriodo2}</strong>: Parcela com Mudança de Base + Compensação`;
+                htmlContent += `<span>Valor: R$ ${valorFormatado2} + Reajuste anual</span></li>`;
+            }
+            
+            htmlContent += '</ul>';
+
+            resultDiv.innerHTML = htmlContent;
+        }
+    </script>
+</body>
+</html>
