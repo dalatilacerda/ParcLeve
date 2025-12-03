@@ -282,9 +282,9 @@
             
             let htmlContent = '<h2>Resultados do Cálculo</h2>';
             htmlContent += `<p><strong>Duração Total do Curso:</strong> ${parseInt(durMesesTotal)} meses</p>`;
-            htmlContent += `<p><strong>Acréscimo de Compensação Mensal:</strong> R$ ${compensacaoMensal.toFixed(2).replace('.', ',')}</p>`;
+            htmlContent += `<p><strong>Valor diluído em parcelas:</strong> R$ ${compensacaoMensal.toFixed(2).replace('.', ',')}</p>`;
 
-            htmlContent += '<h3>Detalhes das Parcelas:</h3>';
+            htmlContent += '<h3>Parcelas detalhadas:</h3>';
             htmlContent += '<ul>';
 
             // 1. Parcela Leve
@@ -330,7 +330,7 @@
                 
                 let descricaoPeriodo2 = `${inicioSegundoPeriodo}° mês até o ${fimSegundoPeriodo}° mês aproximadamente`;
 
-                htmlContent += `<li><strong>${descricaoPeriodo2}</strong>: Parcela com Mudança de Base + Compensação`;
+                htmlContent += `<li><strong>${descricaoPeriodo2}</strong>: Parcela com Desconto + valor de parcela leve`;
                 htmlContent += `<span>Valor: R$ ${valorFormatado2} + Reajuste anual</span></li>`;
             }
             
