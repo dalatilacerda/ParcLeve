@@ -294,7 +294,7 @@ Por Dalati Lacerda (Operador)</h5>
             const pluralLeve = quantparc > 1 ? 'Parcelas Leves' : 'Parcela Leve';
             const mesesLeve = quantparc > 1 ? `do 1° ao ${quantparc}° mês` : `1° mês`;
 
-            htmlContent += `<li><strong>${mesesLeve}</strong>: ${pluralLeve}`;
+            htmlContent += `<li><strong>${mesesLeve}</strong> ${pluralLeve}`;
             htmlContent += `<span>Valor: R$ ${valdparl.toFixed(2).replace('.', ',')}</span></li>`;
 
             // 2. Parcela Normal e Mudança
