@@ -307,7 +307,7 @@ Por Dalati Lacerda (Operador)</h5>
                 let descricaoPeriodo = `${inicioNormal}° mês até o ${fimTotal}° mês aproximadamente`;
                 let valorFormatado = valorParcelaNormal.toFixed(2).replace('.', ',');
 
-                htmlContent += `<li><strong>${descricaoPeriodo}</strong> Parcela com desconto + Parcela Leve diluída`;
+                htmlContent += `<li><strong>${descricaoPeriodo}</strong>: Parcela com desconto + Parcela Leve diluída`;
                 htmlContent += `<span>Valor: R$ ${valorFormatado} + Reajuste anual</span></li>`;
 
             } else {
@@ -321,7 +321,7 @@ Por Dalati Lacerda (Operador)</h5>
                     let descricaoPeriodo1 = `${inicioNormal}° mês até o ${mesFimPrimeiroPeriodo}° mês aproximadamente`;
                     let valorFormatado1 = valorParcelaNormal.toFixed(2).replace('.', ',');
                     
-                    htmlContent += `<li><strong>${descricaoPeriodo1}</strong>: Parcela Base + Compensação`;
+                    htmlContent += `<li><strong>${descricaoPeriodo1}</strong> Parcela com desconto padrão + Diluição`;
                     htmlContent += `<span>Valor: R$ ${valorFormatado1}</span></li>`;
                 }
 
