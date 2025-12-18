@@ -292,7 +292,7 @@ Por Dalati Lacerda (Operador)</h5>
 
             // 1. Parcela Leve
             const pluralLeve = quantparc > 1 ? 'Parcelas Leves' : 'Parcela Leve';
-            const mesesLeve = quantparc > 1 ? `do 1° ao ${quantparc}° mês` : `1° mês`;
+            const mesesLeve = quantparc > 1 ? `do 1° ao ${quantparc}° mês:` : `1° mês`;
 
             htmlContent += `<li><strong>${mesesLeve}</strong> ${pluralLeve}`;
             htmlContent += `<span>Valor: R$ ${valdparl.toFixed(2).replace('.', ',')}</span></li>`;
@@ -318,10 +318,10 @@ Por Dalati Lacerda (Operador)</h5>
                 // --- 2.1. Primeiro Período (Parcela Base + Compensação, ANTES da mudança) ---
                 if (inicioNormal < mesMudanca) {
                     
-                    let descricaoPeriodo1 = `${inicioNormal}° mês até o ${mesFimPrimeiroPeriodo}° mês aproximadamente`;
+                    let descricaoPeriodo1 = `${inicioNormal}° mês até o ${mesFimPrimeiroPeriodo}° mês aproximadamente:`;
                     let valorFormatado1 = valorParcelaNormal.toFixed(2).replace('.', ',');
                     
-                    htmlContent += `<li><strong>${descricaoPeriodo1}</strong> Desconto padrão + Diluição (Parcela 1)`;
+                    htmlContent += `<li><strong>${descricaoPeriodo1}</strong>Desconto padrão + Diluição (Parcela 1)`;
                     htmlContent += `<span>Valor: R$ ${valorFormatado1}</span></li>`;
                 }
 
@@ -331,9 +331,9 @@ Por Dalati Lacerda (Operador)</h5>
                 let fimSegundoPeriodo = parseInt(durMesesTotal);
                 let valorFormatado2 = valorParcelaMudanca.toFixed(2).replace('.', ',');
                 
-                let descricaoPeriodo2 = `do ${inicioSegundoPeriodo}° mês ao fim do curso aproximadamente`;
+                let descricaoPeriodo2 = `do ${inicioSegundoPeriodo}° mês ao fim do curso aproximadamente:`;
 
-                htmlContent += `<li><strong>${descricaoPeriodo2}</strong>: Desconto padrão + Diluição (Parcela 2)`;
+                htmlContent += `<li><strong>${descricaoPeriodo2}</strong>Desconto padrão + Diluição (Parcela 2)`;
                 htmlContent += `<span>Valor: R$ ${valorFormatado2} + Reajuste anual</span></li>`;
             }
             
